@@ -154,9 +154,7 @@ Mie::MuellerResult Mie::mueller_mie(double x, std::complex<double> refrel, const
     if (only_g) {
         nang = 2; // For HG, only need forward and back scattering
     } else {
-        // Corresponds to (nang_scatt+1)/2 + 1 in Fortran, but since
-        // nang_scatt is even, this simplifies to nang_scatt/2 + 1.
-        nang = 180 / 2 + 1;
+        nang = 180 / 2 ;
     }
 
     // --- Input Validation ---
