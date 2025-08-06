@@ -1,20 +1,11 @@
+#include "bhmie.h"
 #include <iostream>
 #include <vector>
 #include <complex>
 #include <cmath>
-#include <numbers> // For std::numbers::pi
+#include <numbers>
+#include <algorithm>
 
-/**
- * @brief A structure to hold all the output results from the Mie calculation.
- */
-struct MieResult {
-    std::vector<std::complex<double>> s1;
-    std::vector<std::complex<double>> s2;
-    double q_ext;
-    double q_sca;
-    double q_back;
-    double g_sca;
-};
 
 /**
  * @brief C++ translation of the Bohren-Huffman BHMIE Fortran subroutine.
@@ -27,7 +18,9 @@ struct MieResult {
  * @param nang The number of angles between 0 and 90 degrees for which to calculate scattering amplitudes.
  * @return A MieResult struct containing the scattering efficiencies and complex scattering amplitudes.
  */
-MieResult bhmie(double x, const std::complex<double>& refrel, int nang) {
+
+
+Mie::Result Mie::bhmie(double x, const std::complex<double>& refrel, int nang) {
     // Ensure nang is at least 2 for calculations at 0, 90, and 180 degrees.
     if (nang < 2) {
         nang = 2;
@@ -51,7 +44,7 @@ MieResult bhmie(double x, const std::complex<double>& refrel, int nang) {
     std::vector<double> tau(nang);
 
     // Initialize the result structure
-    MieResult result;
+    Result result;
     const int s_size = 2 * nang - 1;
     result.s1.assign(s_size, {0.0, 0.0});
     result.s2.assign(s_size, {0.0, 0.0});

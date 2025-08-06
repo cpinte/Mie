@@ -1,3 +1,9 @@
+#include "bhmie.h"
+#include <iostream>
+#include <complex>
+#include <numbers>
+
+
 // --- Example Usage ---
 int main() {
     // --- Input Parameters ---
@@ -12,7 +18,8 @@ int main() {
     const std::complex<double> refrel = refractive_index_sphere / refractive_index_medium;
 
     // --- Call the Mie scattering function ---
-    MieResult results = bhmie(x, refrel, num_angles);
+    Mie::Result results;
+    results  = Mie::bhmie(x, refrel, num_angles);
 
     // --- Print Results ---
     std::cout << "Mie Scattering Calculation Results" << std::endl;
