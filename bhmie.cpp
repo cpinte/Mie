@@ -145,3 +145,60 @@ Mie::Result Mie::bhmie(double x, const std::complex<double>& refrel, int nang) {
 
     return result;
 }
+
+
+Mie::MuellerResult Mie::mueller_mie(double x, std::complex<double> refrel, const bool only_g = false) {
+
+    // --- Determine number of angles for bhmie call ---
+    int nang;
+    if (only_g) {
+        nang = 2; // For HG, only need forward and back scattering
+    } else {
+        // Corresponds to (nang_scatt+1)/2 + 1 in Fortran, but since
+        // nang_scatt is even, this simplifies to nang_scatt/2 + 1.
+        nang = 180 / 2 + 1;
+    }
+
+    // --- Input Validation ---
+    if (nang % 2 != 0) {
+      throw std::runtime_error("nang must be an EVEN number");
+    }
+
+    // --- Call the core Mie routine ---
+    Mie::Result bhmie_result = Mie::bhmie(x, refrel, nang);
+
+    Mie::MuellerResult result;
+    result.q_ext = bhmie_result.q_ext;
+    result.q_sca = bhmie_result.q_sca;
+    result.g_sca = bhmie_result.g_sca;
+
+    // --- Calculate Mueller Matrix (if not using HG approximation) ---
+    const size_t matrix_size = nang + 1;
+    result.s11.resize(matrix_size);
+    result.s12.resize(matrix_size);
+    result.s33.resize(matrix_size);
+    result.s34.resize(matrix_size);
+
+    // The normalization of bhmie for s11 is 0.5*x**2*Qsca.
+    // We correct to have a normalization to Qsca.
+    double factor = (x > 0.0) ? (1.0 / (0.5 * x * x)) : 0.0;
+
+    for (size_t j = 0; j < matrix_size; ++j) {
+      // std::norm(z) is |z|^2
+      double vi1 = std::norm(bhmie_result.s2[j]);
+      double vi2 = std::norm(bhmie_result.s1[j]);
+
+      result.s11[j] = 0.5 * (vi1 + vi2) * factor;
+      result.s12[j] = 0.5 * (vi1 - vi2) * factor;
+
+      // s = S2 * conj(S1)
+      std::complex<double> s = bhmie_result.s2[j] * std::conj(bhmie_result.s1[j]);
+      result.s33[j] = s.real() * factor;
+      result.s34[j] = s.imag() * factor;
+    }
+
+    result.s22 = result.s11; // S22 = S11 for spheres
+    result.s44 = result.s33; // S44 = S33 for spheres
+
+    return result;
+}
