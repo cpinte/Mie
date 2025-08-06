@@ -50,7 +50,7 @@ int main() {
 
     try {
         // Call the new mueller_mie function
-      Mie::MuellerResult mueller = Mie::mueller_mie(x, refrel, false);
+      Mie::MuellerResult mueller = Mie::mueller_mie(x, refrel);
 
         std::cout << "Mueller Matrix Calculation Results" << std::endl;
         std::cout << "----------------------------------" << std::endl;

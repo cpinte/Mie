@@ -12,3 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # This tells CMake to compile example.cpp and bhmie.cpp together
 # to create an executable named "mie_example".
 add_executable(mie_example example.cpp bhmie.cpp)
+
+
+find_package(pybind11 REQUIRED)
+
+pybind11_add_module(bhmie_py pybind_bhmie.cpp bhmie.cpp)

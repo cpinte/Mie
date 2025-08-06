@@ -5,7 +5,7 @@
 #include <cmath>
 #include <numbers>
 #include <algorithm>
-
+#include <optional>
 
 /**
  * @brief C++ translation of the Bohren-Huffman BHMIE Fortran subroutine.
@@ -147,7 +147,7 @@ Mie::Result Mie::bhmie(double x, const std::complex<double>& refrel, int nang) {
 }
 
 
-Mie::MuellerResult Mie::mueller_mie(double x, std::complex<double> refrel, const bool only_g = false) {
+Mie::MuellerResult Mie::mueller_mie(double x, std::complex<double> refrel,  const std::optional<bool> only_g) {
 
     // --- Determine number of angles for bhmie call ---
     int nang;

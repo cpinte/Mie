@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <complex>
+#include <optional>
 
 namespace Mie {
 
@@ -28,6 +29,6 @@ namespace Mie {
       std::vector<double> s44;
     };
 
-    MuellerResult mueller_mie(double x, std::complex<double> refrel, const bool only_g);
+    MuellerResult mueller_mie(double x, std::complex<double> refrel,  const std::optional<bool> only_g = false);
 
 }
