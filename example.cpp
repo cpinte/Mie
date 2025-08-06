@@ -4,7 +4,12 @@
 #include <numbers>
 
 
-// --- Example Usage ---
+/**
+ * @brief Example usage of the Mie scattering functions.
+ *
+ * Demonstrates how to use Mie::bhmie and Mie::mueller_mie to compute scattering properties
+ * and print results for a sphere in a given medium.
+ */
 int main() {
     // --- Input Parameters ---
     const double radius_microns = 0.5;

@@ -149,12 +149,14 @@ Mie::Result Mie::bhmie(double x, const std::complex<double>& refrel, int nang) {
 
 Mie::MuellerResult Mie::mueller_mie(double x, std::complex<double> refrel,  const std::optional<bool> only_g) {
 
+    int nang_scatt = 180;
+
     // --- Determine number of angles for bhmie call ---
     int nang;
     if (only_g) {
         nang = 2; // For HG, only need forward and back scattering
     } else {
-        nang = 180 / 2 ;
+        nang = nang_scatt / 2 ;
     }
 
     // --- Input Validation ---
@@ -171,7 +173,7 @@ Mie::MuellerResult Mie::mueller_mie(double x, std::complex<double> refrel,  cons
     result.g_sca = bhmie_result.g_sca;
 
     // --- Calculate Mueller Matrix (if not using HG approximation) ---
-    const size_t matrix_size = nang + 1;
+    const size_t matrix_size = nang_scatt - 1;
     result.s11.resize(matrix_size);
     result.s12.resize(matrix_size);
     result.s33.resize(matrix_size);
