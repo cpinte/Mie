@@ -6,10 +6,8 @@ A modern C++ implementation of the Bohren & Huffman Mie scattering algorithm wit
 
 - **Mie Scattering Calculation**: Compute scattering amplitudes (S1, S2) and efficiencies (Q_ext, Q_sca, Q_back, g_sca)
 - **Mueller Matrix Support**: Calculate full Mueller matrix elements for polarized light scattering
-- **C++20 Implementation**: Modern C++ with comprehensive error handling
-- **Python Bindings**: Easy-to-use Python interface via pybind11
-- **Cross-platform**: Works on Windows, macOS, and Linux
-- **MIT Licensed**: Free for academic and commercial use
+- **C++20 Implementation**
+- **Python Bindings**
 
 ## Installation
 
@@ -42,7 +40,7 @@ A modern C++ implementation of the Bohren & Huffman Mie scattering algorithm wit
 
 This will create:
 - `mie_example` - C++ executable demonstrating the library usage
-- `bhmie_py.*.so` (or `.pyd` on Windows) - Python module
+- `bhmie_py.*.so` - Python module
 
 ## Usage
 
